@@ -1,0 +1,3 @@
+rootProject.name = 'FistDemo'
+
+include ':app'
