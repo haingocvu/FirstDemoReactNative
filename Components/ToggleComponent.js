@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet} from 'react-native'
+import RNShake from 'react-native-shake'
 
 const style = StyleSheet.create({
     bigBlue: {
@@ -16,13 +17,8 @@ class MyToggle extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isShow : false
+            isShow : true
         }
-        setInterval(() => {
-            this.setState(preState => ({
-                isShow : !preState.isShow
-            }))
-        }, 1000);
     }
     render() {
         if(!this.state.isShow) return null;
@@ -31,6 +27,17 @@ class MyToggle extends Component {
                 <Text style={this.props.style}>{this.props.text}</Text>
             </View>
         )
+    }
+    componentDidMount() {
+        RNShake.addEventListener('ShakeEvent', () => {
+            this.setState(preState => ({
+                isShow : !preState.isShow
+            }))
+        });
+    }
+
+    componentWillUnmount() {
+        RNShake.removeEventListener('ShakeEvent');
     }
 }
 
